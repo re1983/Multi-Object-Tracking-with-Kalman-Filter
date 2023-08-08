@@ -12,7 +12,7 @@ def createimage(w,h):
 
 def main():
 	data = np.array(np.load('Detections.npy'))[0:10,0:150,0:150]
-	tracker = Tracker(150, 30, 5)
+	tracker = Tracker(150, 30)
 	skip_frame_count = 0
 	track_colors = [(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0),
 					(127, 127, 255), (255, 0, 255), (255, 127, 255),
@@ -35,8 +35,8 @@ def main():
 						x = int(tracker.tracks[j].trace[k][0,0])
 						y = int(tracker.tracks[j].trace[k][0,1])
 						cv2.circle(frame,(x,y), 3, track_colors[j],-1)
-					cv2.circle(frame,(x,y), 6, track_colors[j],-1)
-				cv2.circle(frame,(int(data[j,i,0]),int(data[j,i,1])), 6, (0,0,0),-1)
+					cv2.circle(frame,(x,y), 6, track_colors[j],1)
+				cv2.circle(frame,(int(data[j,i,0]),int(data[j,i,1])), 3, (0,0,0),-1)
 			cv2.imshow('image',frame)
 			# cv2.imwrite("image"+str(i)+".jpg", frame)
 			# images.append(imageio.imread("image"+str(i)+".jpg"))

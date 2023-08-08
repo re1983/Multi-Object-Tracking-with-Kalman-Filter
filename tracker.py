@@ -6,12 +6,12 @@ from collections import deque
 
 class Tracks(object):
 	"""docstring for Tracks"""
-	def __init__(self, detection, trackId):
+	def __init__(self, detection, trackId, maxlen):
 		super(Tracks, self).__init__()
 		self.KF = KalmanFilter()
 		self.KF.predict()
 		self.KF.correct(np.matrix(detection).reshape(2,1))
-		self.trace = deque(maxlen=20)
+		self.trace = deque(maxlen = maxlen)
 		self.prediction = detection.reshape(1,2)
 		self.trackId = trackId
 		self.skipped_frames = 0
@@ -23,7 +23,7 @@ class Tracks(object):
 
 class Tracker(object):
 	"""docstring for Tracker"""
-	def __init__(self, dist_threshold, max_frame_skipped, max_trace_length):
+	def __init__(self, dist_threshold, max_frame_skipped, max_trace_length=20):
 		super(Tracker, self).__init__()
 		self.dist_threshold = dist_threshold
 		self.max_frame_skipped = max_frame_skipped
@@ -34,7 +34,7 @@ class Tracker(object):
 	def update(self, detections):
 		if len(self.tracks) == 0:
 			for i in range(detections.shape[0]):
-				track = Tracks(detections[i], self.trackId)
+				track = Tracks(detections[i], self.trackId, self.max_trace_length)
 				self.trackId +=1
 				self.tracks.append(track)
 
@@ -83,14 +83,3 @@ class Tracker(object):
 				self.tracks[i].skipped_frames = 0
 				self.tracks[i].predict(detections[assignment[i]])
 			self.tracks[i].trace.append(self.tracks[i].prediction)
-
-
-
-
-
-
-
-		
-
-
-
