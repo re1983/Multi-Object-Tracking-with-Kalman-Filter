@@ -23,7 +23,7 @@ class Tracks(object):
 
 class Tracker(object):
 	"""docstring for Tracker"""
-	def __init__(self, dist_threshold, max_frame_skipped, max_trace_length=20):
+	def __init__(self, dist_threshold, max_frame_skipped, max_trace_length=30):
 		super(Tracker, self).__init__()
 		self.dist_threshold = dist_threshold
 		self.max_frame_skipped = max_frame_skipped
@@ -73,7 +73,7 @@ class Tracker(object):
 
 		for i in range(len(detections)):
 			if i not in assignment:
-				track = Tracks(detections[i], self.trackId)
+				track = Tracks(detections[i], self.trackId, self.max_trace_length)
 				self.trackId +=1
 				self.tracks.append(track)
 

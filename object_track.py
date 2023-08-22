@@ -20,8 +20,10 @@ def main():
 
 	for i in range(data.shape[1]):
 		centers = data[:,i,:]
+		np.random.shuffle(centers)
 		frame = createimage(512,512)
 		if (len(centers) > 0):
+			print(centers)
 			tracker.update(centers)
 			for j in range(len(tracker.tracks)):
 				if (len(tracker.tracks[j].trace) > 1):
