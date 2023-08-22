@@ -80,8 +80,12 @@ def mpt():
     # Set the new dimensions
     new_width = 1280
     new_height = int(new_width * height / width)
-    print(new_height, new_width) 
+    print(new_height, new_width)
     tr=[]
+
+    # out = cv.VideoWriter("reslut_MPT_15fps.mp4", cv.VideoWriter_fourcc('D', 'I', 'V', 'X'), video_fps/2,
+    #                     (int(new_width), int(new_height)), True)
+
     while True:
         dets = []
         detection = set()
@@ -219,7 +223,7 @@ def mpt():
             prev_gray = frame_gray
             cv.imshow('track', vis)
             # out.write(vis)
-            ch = cv.waitKey(0)
+            ch = cv.waitKey(30)
             if ch ==27:
                 # cv.imwrite('track.jpg', vis)
                 break
@@ -234,5 +238,5 @@ def mpt():
 
 
 if __name__ == '__main__':
-	main()
-    # mpt()
+	# main()
+    mpt()
